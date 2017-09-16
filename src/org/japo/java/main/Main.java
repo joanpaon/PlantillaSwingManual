@@ -15,64 +15,30 @@
  */
 package org.japo.java.main;
 
-import java.awt.EventQueue;
 import java.util.Properties;
+import javax.swing.SwingUtilities;
 import org.japo.java.forms.GUI;
 import org.japo.java.libraries.UtilesApp;
-import org.japo.java.libraries.UtilesSwing;
 
 /**
  *
  * @author José A. Pacheco Ondoño - joanpaon@gmail.com
- *
  */
 public class Main {
-
     // Fichero Propiedades App
     public static final String FICHERO_PROPIEDADES = "app.properties";
 
-    // Propiedades App
-    public static final String PRP_PUERTO_BLOQUEO = "gui.puerto_bloqueo";
-    public static final String PRP_LOOK_AND_FEEL = "gui.look_and_feel";
-    public static final String PRP_RUTA_FAVICON = "gui.ruta_favicon";
-
-    // Valores por Defecto
-    public static final String DEF_PUERTO_BLOQUEO = "54321";    
-    public static final String DEF_LOOK_AND_FEEL = UtilesSwing.LNF_WINDOWS;    
-    public static final String DEF_RUTA_FAVICON = "img/favicon.png";    
-
-
-    // Referencias
-    private final Main main;
-    private final Properties prp;
-    private GUI gui;
-
-    // Inicialización Aplicación
-    public Main() {
-        // Referencia el objeto Main
-        main = this;
-
-        // Cargar Propiedades App
-        prp = UtilesApp.cargarPropiedades(FICHERO_PROPIEDADES);
-    }
-
-    // Entrada a la aplicación
+    // Entrada a la Aplicación
     public static void main(String[] args) {
-        // Inicializa Aplicación
-        Main main = new Main();
+        // Lanzar GUI
+        SwingUtilities.invokeLater(() -> {
+            // Cargar Propiedades App
+            Properties prp = UtilesApp.cargarPropiedades(FICHERO_PROPIEDADES);
 
-        // Ejecuta la Aplicación
-        main.launchApp();
-    }
+            // Instanciar GUI
+            GUI gui = new GUI(prp);
 
-    // Ejecuta la aplicación
-    private void launchApp() {
-        // Lanza GUI
-        EventQueue.invokeLater(() -> {
-            // Instancia la ventana
-            gui = new GUI(main, prp);
-
-            // Muestra la ventana
+            // Mostrar GUI
             gui.setVisible(true);
         });
     }

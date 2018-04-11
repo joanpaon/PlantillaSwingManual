@@ -33,7 +33,7 @@ public class Main {
         // Lanzar GUI
         SwingUtilities.invokeLater(() -> {
             // Cargar Propiedades App
-            Properties prp = UtilesApp.cargarPropiedades(FICHERO_PROPIEDADES);
+            Properties prp = UtilesApp.importarPropiedades(FICHERO_PROPIEDADES);
 
             // Instanciar GUI
             GUI gui = new GUI(prp);

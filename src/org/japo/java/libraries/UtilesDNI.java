@@ -29,7 +29,7 @@ public class UtilesDNI {
     // Limites DNI
     public static final int NUM_MIN = 10000000;
     public static final int NUM_MAX = 99999999;
-    
+
     // Limites DNI - Extranjero
     public static final int EXT_MIN = 1000000;
     public static final int EXT_MAX = 29999999;
@@ -44,21 +44,21 @@ public class UtilesDNI {
     public static final String ER_DNI = ER_DNI_ESP + "|" + ER_DNI_EXT;
 
     // Calcula letra a partir del número de DNI
-    public static char calcularControl(int dni) {
+    public static final char calcularControl(int dni) {
         return SECUENCIA.charAt(dni % SECUENCIA.length());
     }
 
     // Número del DNI
-    public static int obtenerNumero(String dni) throws Exception {
+    public static final int obtenerNumero(String dni) throws Exception {
         // Transformación DNI extranjero
         String dato = procesarDigitoInicial(dni);
-        
+
         // Devuelve el número
         return Integer.parseInt(dato.substring(0, 8));
     }
 
     // Control del DNI
-    public static char obtenerControl(String dni) throws Exception {
+    public static final char obtenerControl(String dni) throws Exception {
         // Devuelve Letra
         return dni.charAt(8);
     }
@@ -79,7 +79,7 @@ public class UtilesDNI {
     public static final String procesarDigitoInicial(String dato) {
         // Auxiliar
         String aux = dato;
-        
+
         // Análisis
         try {
             // Transformar Letra Residentes Extranjeros
@@ -96,7 +96,7 @@ public class UtilesDNI {
         } catch (Exception e) {
             aux = dato;
         }
-        
+
         // Devuelve el número
         return aux;
     }

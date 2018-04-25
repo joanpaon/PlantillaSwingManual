@@ -35,17 +35,17 @@ public class UtilesApp {
     public static final String DEF_PUERTO_BLOQUEO = "54321";
 
     // Fichero (Por defecto) > Propiedades    
-    public static Properties importarPropiedades() {
+    public static final Properties importarPropiedades() {
         return importarPropiedades(DEF_FICHERO_PRP);
     }
 
     // Fichero XML (Por defecto) > Propiedades    
-    public static Properties importarPropiedadesXML() {
+    public static final Properties importarPropiedadesXML() {
         return importarPropiedadesXML(DEF_FICHERO_XML);
     }
 
     // Fichero Propiedades > Objeto Propiedades
-    public static Properties importarPropiedades(String fichero) {
+    public static final Properties importarPropiedades(String fichero) {
         // Objeto de Propiedades Vacio
         Properties prp = new Properties();
 
@@ -61,7 +61,7 @@ public class UtilesApp {
     }
 
     // Fichero Propiedades XML > Objeto Propiedades
-    public static Properties importarPropiedadesXML(String fichero) {
+    public static final Properties importarPropiedadesXML(String fichero) {
         // Objeto de Propiedades Vacio
         Properties prp = new Properties();
 
@@ -78,17 +78,17 @@ public class UtilesApp {
     }
 
     // Propiedades > Fichero (Por defecto)
-    public static boolean exportarPropiedades(Properties prp) {
+    public static final boolean exportarPropiedades(Properties prp) {
         return exportarPropiedades(prp, DEF_FICHERO_PRP);
     }
 
     // Propiedades > Fichero XML (Por defecto)
-    public static boolean exportarPropiedadesXML(Properties prp) {
+    public static final boolean exportarPropiedadesXML(Properties prp) {
         return exportarPropiedadesXML(prp, DEF_FICHERO_PRP);
     }
 
     // Propiedades > Fichero
-    public static boolean exportarPropiedades(Properties prp, String fichero) {
+    public static final boolean exportarPropiedades(Properties prp, String fichero) {
         // Semáforo Estado
         boolean procesoOK = false;
 
@@ -109,7 +109,7 @@ public class UtilesApp {
     }
 
     // Propiedades > Fichero XML
-    public static boolean exportarPropiedadesXML(Properties prp, String fichero) {
+    public static final boolean exportarPropiedadesXML(Properties prp, String fichero) {
         // Semáforo Estado
         boolean procesoOK = false;
 
@@ -130,7 +130,7 @@ public class UtilesApp {
     }
 
     // Activa Instancia Única
-    public static boolean activarInstancia(Properties prp) {
+    public static final boolean activarInstancia(Properties prp) {
         // Semaforo Estado
         boolean instanciaOK = false;
 
@@ -155,7 +155,7 @@ public class UtilesApp {
     }
 
     // Activa Instancia Única
-    public static boolean activarInstancia(String txtPuerto) {
+    public static final boolean activarInstancia(String txtPuerto) {
         // Semaforo Estado
         boolean instanciaOK = false;
 

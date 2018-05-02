@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.ServerSocket;
 import java.util.Properties;
 
@@ -30,6 +31,7 @@ import java.util.Properties;
 public class UtilesApp {
 
     // Valores por Defecto
+    public static final String DEF_PAQUETE_PRP = "properties";
     public static final String DEF_FICHERO_PRP = "app.properties";
     public static final String DEF_FICHERO_XML = "app.xml";
     public static final String DEF_PUERTO_BLOQUEO = "54321";
@@ -60,6 +62,22 @@ public class UtilesApp {
         return prp;
     }
 
+    // Recurso Propiedades > Objeto Propiedades
+    public static final Properties importarPropiedadesRecurso(String recurso) {
+        // Objeto de Propiedades Vacio
+        Properties prp = new Properties();
+
+        // Cargar Fichero de Propiedades 
+        try (InputStream is = ClassLoader.getSystemResourceAsStream(recurso)) {
+            prp.load(is);
+        } catch (Exception e) {
+            System.out.println("ERROR: Acceso al recurso de propiedades " + recurso);
+        }
+
+        // Devolver Propiedades
+        return prp;
+    }
+    
     // Fichero Propiedades XML > Objeto Propiedades
     public static final Properties importarPropiedadesXML(String fichero) {
         // Objeto de Propiedades Vacio

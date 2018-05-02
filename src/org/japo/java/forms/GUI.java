@@ -15,9 +15,16 @@
  */
 package org.japo.java.forms;
 
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.net.URL;
 import java.util.Properties;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import org.japo.java.components.BackgroundPanel;
 import org.japo.java.libraries.UtilesSwing;
 
 /**
@@ -27,12 +34,16 @@ import org.japo.java.libraries.UtilesSwing;
 public class GUI extends JFrame {
 
     // Propiedades App
-    public static final String PRP_LOOK_AND_FEEL = "look_and_feel";
-    public static final String PRP_FAVICON = "favicon";
+    public static final String PRP_LOOK_AND_FEEL_PROFILE = "look_and_feel_profile";
+    public static final String PRP_FAVICON_RESOURCE = "favicon_resource";
+    public static final String PRP_BACKGROUND_RESOURCE = "background_resource";
+    public static final String PRP_FONT_RESOURCE = "font_resource";
 
     // Valores por Defecto
-    public static final String DEF_LOOK_AND_FEEL = UtilesSwing.LNF_NIMBUS;
-    public static final String DEF_FAVICON = "img/favicon.png";
+    public static final String DEF_LOOK_AND_FEEL_PROFILE = UtilesSwing.LNF_WINDOWS_PROFILE;
+    public static final String DEF_FAVICON_RESOURCE = "images/favicon.png";
+    public static final String DEF_BACKGROUND_RESOURCE = "images/background.png";
+    public static final String DEF_FONT_RESOURCE = "fonts/default_font.ttf";
 
     // Referencias
     private Properties prp;
@@ -51,14 +62,28 @@ public class GUI extends JFrame {
 
     // Construcción - GUI
     private void initComponents() {
+        // Etiqueta Muestra
+        JLabel lblSample = new JLabel("Connect the dots!!!");
+        lblSample.setFont(UtilesSwing.importarFuenteRecurso(
+                prp.getProperty(PRP_FONT_RESOURCE, DEF_FONT_RESOURCE)).
+                deriveFont(Font.BOLD, 60f));
+        lblSample.setHorizontalAlignment(JLabel.RIGHT);
+
+        // Imagen de fondo
+        String bckPpal = prp.getProperty(PRP_BACKGROUND_RESOURCE, DEF_BACKGROUND_RESOURCE);
+        URL urlPpal = ClassLoader.getSystemResource(bckPpal);
+        Image imgPpal = new ImageIcon(urlPpal).getImage();
+
         // Panel Principal
-        JPanel pnlPpal = new JPanel();
+        JPanel pnlPpal = new BackgroundPanel(imgPpal);
+        pnlPpal.setLayout(new GridBagLayout());
+        pnlPpal.add(lblSample);
 
         // Ventana Principal
         setContentPane(pnlPpal);
         setTitle("Swing Manual #00");
         setResizable(false);
-        setSize(600, 400);
+        setSize(500, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -69,12 +94,14 @@ public class GUI extends JFrame {
         this.prp = prp;
 
         // Establecer LnF
-        UtilesSwing.establecerLnF(prp.getProperty(PRP_LOOK_AND_FEEL, DEF_LOOK_AND_FEEL));
+        UtilesSwing.establecerLnFProfile(prp.getProperty(
+                PRP_LOOK_AND_FEEL_PROFILE, DEF_LOOK_AND_FEEL_PROFILE));
     }
 
     // Inicialización Posterior
     private void initAfter() {
         // Establecer Favicon
-        UtilesSwing.establecerFavicon(this, prp.getProperty(PRP_FAVICON, DEF_FAVICON));
+        UtilesSwing.establecerFavicon(this, prp.getProperty(
+                PRP_FAVICON_RESOURCE, DEF_FAVICON_RESOURCE));
     }
 }

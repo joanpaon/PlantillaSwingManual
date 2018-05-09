@@ -131,17 +131,14 @@ public class UtilesSwing {
 
     // Establecer LnF - Nombre de Perfil
     public static final void establecerLnFProfile(String lnfProfile) {
-        switch (lnfProfile) {
-            case LNF_SYSTEM_PROFILE:
+        if (lnfProfile.equalsIgnoreCase(LNF_SYSTEM_PROFILE)) {
             establecerLnFSistema();
-                break;
-            case LNF_CROSS_PLATFORM_PROFILE:
+        } else if (lnfProfile.equalsIgnoreCase(LNF_CROSS_PLATFORM_PROFILE)) {
             establecerLnFCrossPlatform();
-                break;
-            default:
+        } else {
             try {
                 for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                        if (lnfProfile.equals(info.getName())) {
+                    if (lnfProfile.equalsIgnoreCase(info.getName())) {
                         UIManager.setLookAndFeel(info.getClassName());
                     }
                 }

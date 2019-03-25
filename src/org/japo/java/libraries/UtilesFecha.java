@@ -21,8 +21,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -296,8 +294,8 @@ public final class UtilesFecha {
 
             // Convierte Fecha
             d = sdf.parse(fecha);
-        } catch (ParseException ex) {
-            Logger.getLogger(UtilesFecha.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException e) {
+            System.out.println("ERROR: Conversión cancelada - " + e.getMessage());
         }
 
         // Devuelve Fecha Date

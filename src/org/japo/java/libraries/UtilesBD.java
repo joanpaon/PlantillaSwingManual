@@ -45,7 +45,7 @@ public class UtilesBD {
     private static final String PRP_PORT = "port";
     private static final String PRP_DBAM = "db";
     private static final String PRP_USER = "user";
-    private static final String PRP_PASS = "password";
+    private static final String PRP_PASS = "pass";
 
     // Formato Conexión
     private static final String FORMATO_CON = "%s://%s:%s/%s?user=%s&password=%s";
@@ -128,7 +128,7 @@ public class UtilesBD {
     }
 
     // SQL Date >> String (dd/MM/yyyy)
-    public static String convertirSQLDate2String(java.sql.Date sqlDate) {
+    public static final String convertirSQLDate2String(java.sql.Date sqlDate) {
         // Obtiene milisegundos de fecha
         long ms = sqlDate.getTime();
 

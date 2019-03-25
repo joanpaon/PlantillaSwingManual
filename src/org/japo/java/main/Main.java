@@ -25,6 +25,7 @@ import org.japo.java.libraries.UtilesApp;
  * @author José A. Pacheco Ondoño - joanpaon@gmail.com
  */
 public class Main {
+
     // Fichero Propiedades App
     public static final String FICHERO_PROPIEDADES = "app.properties";
 
@@ -32,8 +33,8 @@ public class Main {
     public static void main(String[] args) {
         // Lanzar GUI
         SwingUtilities.invokeLater(() -> {
-            // Cargar Propiedades App
-            Properties prp = UtilesApp.importarPropiedades(FICHERO_PROPIEDADES);
+            // Propiedades App
+            Properties prp = UtilesApp.importarPropiedadesRecurso();
 
             // Instanciar GUI
             GUI gui = new GUI(prp);

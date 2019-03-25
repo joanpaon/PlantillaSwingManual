@@ -15,16 +15,23 @@
  */
 package org.japo.java.libraries;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author José A. Pacheco Ondoño - joanpaon@gmail.com
  */
-public class UtilesFecha {
+public final class UtilesFecha {
+
+    // Formato de fecha
+    public static final String FORMATO_FECHA = "dd/MM/yyyy";
 
     // Nombres de los dias de la semana
     public static final String[] NOMBRE_DIA = {
@@ -100,7 +107,7 @@ public class UtilesFecha {
             = "(" + ER_FECHA_DIA28 + "|" + ER_FECHA_DIA29 + "|" + ER_FECHA_DIA30 + "|" + ER_FECHA_DIA31 + ")";
 
     // Obtener el número de dias del mes del año
-    public static int obtenerDiasMes(int mes, int any) {
+    public static final int obtenerDiasMes(int mes, int any) {
         // Número de dias del mes
         int numDias;
 
@@ -122,7 +129,7 @@ public class UtilesFecha {
                 numDias = 30;
                 break;
             case 2:
-                numDias = UtilesValidacion.validarBisiesto(any) ? 29 : 28;
+                numDias = validarBisiesto(any) ? 29 : 28;
                 break;
             default:
                 numDias = 0;
@@ -133,17 +140,17 @@ public class UtilesFecha {
     }
 
     // Día (Número) > Día (Nombre)
-    public static String obtenerNombreDia(int dia) {
+    public static final String obtenerNombreDia(int dia) {
         return dia >= 1 && dia <= NOMBRE_DIA.length ? NOMBRE_DIA[dia - 1] : "indefinido";
     }
 
     // Mes (Número) > Mes (Nombre)
-    public static String obtenerNombreMes(int mes) {
+    public static final String obtenerNombreMes(int mes) {
         return mes >= 1 && mes <= NOMBRE_MES.length ? NOMBRE_MES[mes - 1] : "indefinido";
     }
 
     // Fecha (String) > dia (int)
-    public static int obtenerDiaFecha(String fecha) {
+    public static final int obtenerDiaFecha(String fecha) {
         // Dia de la fecha
         int dia;
 
@@ -162,7 +169,7 @@ public class UtilesFecha {
     }
 
     // Fecha (String) > mes (int)
-    public static int obtenerMesFecha(String fecha) {
+    public static final int obtenerMesFecha(String fecha) {
         // Mes de la fecha
         int mes;
 
@@ -181,7 +188,7 @@ public class UtilesFecha {
     }
 
     // Fecha (String) > año (int)
-    public static int obtenerAnyFecha(String fecha) {
+    public static final int obtenerAnyFecha(String fecha) {
         // Año de la fecha
         int any;
 
@@ -200,22 +207,22 @@ public class UtilesFecha {
     }
 
     // Número del Dia del Mes de Hoy
-    public static int obtenerDiaHoy() {
+    public static final int obtenerDiaHoy() {
         return new GregorianCalendar().get(Calendar.DAY_OF_MONTH);
     }
 
     // Número del Mes de Hoy
-    public static int obtenerMesHoy() {
+    public static final int obtenerMesHoy() {
         return new GregorianCalendar().get(Calendar.MONTH) + 1;
     }
 
     // Número del Año de Hoy
-    public static int obtenerAnyHoy() {
+    public static final int obtenerAnyHoy() {
         return new GregorianCalendar().get(Calendar.YEAR);
     }
 
     // Fecha de Hoy - dd/mm/aaaa
-    public static String obtenerFechaHoy() {
+    public static final String obtenerFechaHoy() {
         // Obtiene Fecha Hoy
         Date fechaHoy = new Date();
 
@@ -224,5 +231,103 @@ public class UtilesFecha {
 
         // Formatea y devuelve la Fecha
         return sdf.format(fechaHoy);
+    }
+
+    // Validación Fecha - Texto sin gesglosar - Expresión Regular
+    public static final boolean validarFecha(String fecha) {
+        return UtilesValidacion.validar(fecha, UtilesFecha.ER_FECHA);
+    }
+
+    // Validación Fecha - Campos Separados - Expresión Regular
+    public static final boolean validarFecha(int dia, int mes, int any) {
+        // Construye la fecha a partir de sus componentes
+        String fecha = String.format("%02d"
+                + UtilesFecha.ER_SEP_FECHA.charAt(1) + "%02d"
+                + UtilesFecha.ER_SEP_FECHA.charAt(1) + "%d", dia, mes, any);
+
+        // Devuelve la validación de la fecha
+        return UtilesValidacion.validar(fecha, UtilesFecha.ER_FECHA);
+    }
+
+    // Comprobar si el año es bisiesto
+    public static final boolean validarBisiesto(int any) {
+        return any % 400 == 0 || any % 100 != 0 && any % 4 == 0;
+    }
+
+    // Fecha ( Calendar ) > Fecha ( String )
+    public static final String convertir(Calendar fecha) {
+        return String.format("%02d/%02d/%d",
+                fecha.get(Calendar.DATE),
+                fecha.get(Calendar.MONTH),
+                fecha.get(Calendar.YEAR));
+    }
+
+    // Fecha ( Date ) > Fecha ( String )
+    public static final String convertir(Date fecha) {
+        // Objeto Calendar
+        Calendar c = Calendar.getInstance();
+
+        // Establece la fecha
+        c.setTime(fecha);
+
+        // Representación Fecha
+        return String.format("%02d/%02d/%d",
+                c.get(Calendar.DATE),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.YEAR));
+    }
+
+    // Fecha ( String ) > Fecha ( Date )
+    public static final Date convertir(String fecha) {
+        return convertir(fecha, FORMATO_FECHA);
+    }
+
+    // Fecha ( String ) > Fecha ( Date ) - Formato Personalizado
+    public static final Date convertir(String fecha, String formato) {
+        // Referencia Fecha
+        Date d = null;
+
+        // Locale ESPAÑA
+        Locale lcl = new Locale("ES", "es");
+
+        try {
+            // Formateador de Fecha
+            SimpleDateFormat sdf = new SimpleDateFormat(formato, lcl);
+
+            // Convierte Fecha
+            d = sdf.parse(fecha);
+        } catch (ParseException ex) {
+            Logger.getLogger(UtilesFecha.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Devuelve Fecha Date
+        return d;
+    }
+
+    // Calcular dias entre fechas
+    public static final int obtenerDistancia(String fechaIni, String fechaFin) throws ParseException {
+        // Objetos Date
+        Date dateIni = convertir(fechaIni);
+        Date dateFin = convertir(fechaFin);
+
+        // Distancia Fechas >> ms
+        long ms = dateFin.getTime() - dateIni.getTime();
+
+        // ms >> dias
+        return (int) (ms / 1000 / 3600 / 24);
+
+//        long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+    }
+
+    // Calcular dias entre fechas
+    public static final String obtenerFechaHoy2() {
+        // Fecha del sistema
+        Calendar c = Calendar.getInstance();
+
+        // Representación texto
+        return String.format("%02d/%02d/%d",
+                c.get(Calendar.DATE),
+                c.get(Calendar.MONTH),
+                c.get(Calendar.YEAR));
     }
 }

@@ -15,9 +15,16 @@
  */
 package org.japo.java.forms;
 
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.net.URL;
 import java.util.Properties;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import org.japo.java.components.BackgroundPanel;
 import org.japo.java.libraries.UtilesSwing;
 
 /**
@@ -32,6 +39,8 @@ public class GUI extends JFrame {
     public static final String PRP_FORM_TITLE = "form_title";
     public static final String PRP_FORM_HEIGHT = "form_height";
     public static final String PRP_FORM_WIDTH = "form_width";
+    public static final String PRP_FORM_BACKGROUND_RESOURCE = "form_background_resource";
+    public static final String PRP_FORM_FONT_RESOURCE = "form_font_resource";
 
     // Valores por Defecto
     public static final String DEF_LOOK_AND_FEEL_PROFILE = UtilesSwing.LNF_WINDOWS_PROFILE;
@@ -39,7 +48,9 @@ public class GUI extends JFrame {
     public static final String DEF_FORM_TITLE = "Swing Manual App";
     public static final int DEF_FORM_HEIGHT = 400;
     public static final int DEF_FORM_WIDTH = 600;
-
+    public static final String DEF_FORM_BACKGROUND_RESOURCE = "img/background.jpg";
+    public static final String DEF_FORM_FONT_RESOURCE = "fonts/default_font.ttf";
+    
     // Referencias
     private Properties prp;
 
@@ -57,10 +68,22 @@ public class GUI extends JFrame {
 
     // Construcción - GUI
     private void initComponents() {
-        // --- Configuración del interfaz --- //
+        // Etiqueta Muestra
+        JLabel lblSample = new JLabel("Connect the dots!!!");
+        lblSample.setFont(UtilesSwing.importarFuenteRecurso(
+                prp.getProperty(PRP_FORM_FONT_RESOURCE, DEF_FORM_FONT_RESOURCE)).
+                deriveFont(Font.BOLD, 60f));
+        lblSample.setHorizontalAlignment(JLabel.RIGHT);
+
+        // Imagen de fondo
+        String bckPpal = prp.getProperty(PRP_FORM_BACKGROUND_RESOURCE, DEF_FORM_BACKGROUND_RESOURCE);
+        URL urlPpal = ClassLoader.getSystemResource(bckPpal);
+        Image imgPpal = new ImageIcon(urlPpal).getImage();
 
         // Panel Principal
-        JPanel pnlPpal = new JPanel();
+        JPanel pnlPpal = new BackgroundPanel(imgPpal);
+        pnlPpal.setLayout(new GridBagLayout());
+        pnlPpal.add(lblSample);
 
         // Ventana Principal
         setContentPane(pnlPpal);

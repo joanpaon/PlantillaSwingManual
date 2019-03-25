@@ -26,10 +26,7 @@ import org.japo.java.libraries.UtilesApp;
  */
 public class Main {
 
-    // Fichero Propiedades App
-    public static final String FICHERO_PROPIEDADES = "app.properties";
-
-    // Entrada a la Aplicación
+    // Entrada a la aplicación
     public static void main(String[] args) {
         // Lanzar GUI
         SwingUtilities.invokeLater(() -> {

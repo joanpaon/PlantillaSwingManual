@@ -124,7 +124,7 @@ public final class UtilesDNI {
         int num = new Random().nextInt(NUM_MAX - NUM_MIN + 1) + NUM_MIN;
 
         // Generar Control
-        char ctr = calcularControl(num);
+        char ctr = calcularLetraDNI(num);
 
         // Devolver DNI
         return "" + num + ctr;

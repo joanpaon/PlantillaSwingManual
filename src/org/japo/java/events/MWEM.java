@@ -23,7 +23,7 @@ import org.japo.java.forms.GUI;
  *
  * @author José A. Pacheco Ondoño - joanpaon@gmail.com
  */
-public class MWEM implements MouseWheelListener {
+public final class MWEM implements MouseWheelListener {
 
     // Referencia al GUI
     private final GUI gui;

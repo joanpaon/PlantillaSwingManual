@@ -19,7 +19,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import org.japo.java.forms.GUI;
 
-public class DEM implements DocumentListener {
+public final class DEM implements DocumentListener {
 
     // Referencia al GUI
     private final GUI gui;

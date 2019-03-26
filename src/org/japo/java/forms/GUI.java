@@ -31,7 +31,7 @@ import org.japo.java.libraries.UtilesSwing;
  *
  * @author José A. Pacheco Ondoño - joanpaon@gmail.com
  */
-public class GUI extends JFrame {
+public final class GUI extends JFrame {
 
     // Propiedades App
     public static final String PRP_LOOK_AND_FEEL_PROFILE = "form_look_and_feel_profile";
@@ -50,15 +50,15 @@ public class GUI extends JFrame {
     public static final int DEF_FORM_WIDTH = 500;
     public static final String DEF_FORM_BACKGROUND_RESOURCE = "img/background.jpg";
     public static final String DEF_FORM_FONT_RESOURCE = "fonts/default_font.ttf";
-    
+
     // Referencias
-    private Properties prp;
+    private final Properties prp;
 
     // Constructor
     public GUI(Properties prp) {
         // Conectar Referencia
         this.prp = prp;
-        
+
         // Inicialización Anterior
         initBefore();
 

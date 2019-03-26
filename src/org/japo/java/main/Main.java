@@ -24,7 +24,12 @@ import org.japo.java.libraries.UtilesApp;
  *
  * @author José A. Pacheco Ondoño - joanpaon@gmail.com
  */
-public class Main {
+public final class Main {
+
+    // Constructor Oculto
+    private Main() {
+
+    }
 
     // Entrada a la aplicación
     public static void main(String[] args) {

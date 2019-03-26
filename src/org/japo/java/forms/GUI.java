@@ -46,8 +46,8 @@ public class GUI extends JFrame {
     public static final String DEF_LOOK_AND_FEEL_PROFILE = UtilesSwing.LNF_WINDOWS_PROFILE;
     public static final String DEF_FAVICON_RESOURCE = "img/favicon.png";
     public static final String DEF_FORM_TITLE = "Swing Manual App";
-    public static final int DEF_FORM_HEIGHT = 400;
-    public static final int DEF_FORM_WIDTH = 600;
+    public static final int DEF_FORM_HEIGHT = 300;
+    public static final int DEF_FORM_WIDTH = 500;
     public static final String DEF_FORM_BACKGROUND_RESOURCE = "img/background.jpg";
     public static final String DEF_FORM_FONT_RESOURCE = "fonts/default_font.ttf";
     
@@ -56,8 +56,11 @@ public class GUI extends JFrame {
 
     // Constructor
     public GUI(Properties prp) {
+        // Conectar Referencia
+        this.prp = prp;
+        
         // Inicialización Anterior
-        initBefore(prp);
+        initBefore();
 
         // Creación Interfaz
         initComponents();
@@ -102,10 +105,7 @@ public class GUI extends JFrame {
     }
 
     // Inicialización Anterior    
-    private void initBefore(Properties prp) {
-        // Memorizar Referencia
-        this.prp = prp;
-
+    private void initBefore() {
         // Establecer LnF
         UtilesSwing.establecerLnFProfile(prp.getProperty(
                 PRP_LOOK_AND_FEEL_PROFILE, DEF_LOOK_AND_FEEL_PROFILE));

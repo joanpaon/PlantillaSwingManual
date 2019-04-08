@@ -15,7 +15,6 @@
  */
 package org.japo.java.events;
 
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import org.japo.java.forms.GUI;
 

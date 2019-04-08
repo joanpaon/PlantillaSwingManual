@@ -54,6 +54,10 @@ public final class GUI extends JFrame {
     // Referencias
     private final Properties prp;
 
+    // Componentes
+    private JLabel lblSample;
+    private JPanel pnlPpal;
+
     // Constructor
     public GUI(Properties prp) {
         // Conectar Referencia
@@ -72,7 +76,7 @@ public final class GUI extends JFrame {
     // Construcción - GUI
     private void initComponents() {
         // Etiqueta Muestra
-        JLabel lblSample = new JLabel("Connect the dots!!!");
+        lblSample = new JLabel("Connect the dots!!!");
         lblSample.setFont(UtilesSwing.importarFuenteRecurso(
                 prp.getProperty(PRP_FORM_FONT_RESOURCE, DEF_FORM_FONT_RESOURCE)).
                 deriveFont(Font.BOLD, 60f));
@@ -84,7 +88,7 @@ public final class GUI extends JFrame {
         Image imgPpal = new ImageIcon(urlPpal).getImage();
 
         // Panel Principal
-        JPanel pnlPpal = new BackgroundPanel(imgPpal);
+        pnlPpal = new BackgroundPanel(imgPpal);
         pnlPpal.setLayout(new GridBagLayout());
         pnlPpal.add(lblSample);
 

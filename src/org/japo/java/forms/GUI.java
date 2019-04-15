@@ -32,22 +32,22 @@ import org.japo.java.libraries.UtilesSwing;
 public final class GUI extends JFrame {
 
     // Propiedades App
-    public static final String PRP_FAVICON_RESOURCE = "favicon_resource";
-    public static final String PRP_FONT_RESOURCE = "font_resource";
-    public static final String PRP_FORM_HEIGHT = "form_height";
-    public static final String PRP_FORM_WIDTH = "form_width";
-    public static final String PRP_FORM_TITLE = "form_title";
-    public static final String PRP_IMAGE_RESOURCE = "image_resource";
     public static final String PRP_LOOK_AND_FEEL_PROFILE = "look_and_feel_profile";
+    public static final String PRP_FAVICON_RESOURCE = "favicon_resource";
+    public static final String PRP_FORM_TITLE = "form_title";
+    public static final String PRP_FORM_WIDTH = "form_width";
+    public static final String PRP_FORM_HEIGHT = "form_height";
+    public static final String PRP_FONT_RESOURCE = "font_resource";
+    public static final String PRP_IMAGE_RESOURCE = "image_resource";
 
     // Valores por Defecto
+    public static final String DEF_LOOK_AND_FEEL_PROFILE = UtilesSwing.LNF_WINDOWS_PROFILE;
     public static final String DEF_FAVICON_RESOURCE = "img/favicon.png";
+    public static final String DEF_FORM_TITLE = "Swing Manual App";
+    public static final int DEF_FORM_WIDTH = 500;
+    public static final int DEF_FORM_HEIGHT = 300;
     public static final String DEF_FONT_FALLBACK_NAME = Font.SERIF;
     public static final String DEF_FONT_SYSTEM_NAME = "Kaufmann BT";
-    public static final int DEF_FORM_HEIGHT = 300;
-    public static final int DEF_FORM_WIDTH = 500;
-    public static final String DEF_FORM_TITLE = "Swing Manual App";
-    public static final String DEF_LOOK_AND_FEEL_PROFILE = UtilesSwing.LNF_WINDOWS_PROFILE;
 
     // Referencias
     private final Properties prp;
@@ -79,6 +79,23 @@ public final class GUI extends JFrame {
 
     // Construcción - GUI
     private void initComponents() {
+        // Etiqueta Muestra
+        lblSample = new JLabel("Connect the dots!!!");
+        lblSample.setFont(fntSample.deriveFont(Font.BOLD, 60));
+        lblSample.setHorizontalAlignment(JLabel.RIGHT);
+
+        // Ventana Principal
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    // Inicialización Anterior    
+    private void initBefore() {
+        // Establecer LnF
+        UtilesSwing.establecerLnFProfile(prp.getProperty(
+                PRP_LOOK_AND_FEEL_PROFILE, DEF_LOOK_AND_FEEL_PROFILE));
+
         // Fuentes
         fntSample = UtilesSwing.generarFuenteRecurso(
                 prp.getProperty(PRP_FONT_RESOURCE),
@@ -88,11 +105,13 @@ public final class GUI extends JFrame {
         // Imágenes
         imgSample = UtilesSwing.importarImagenRecurso(
                 prp.getProperty(PRP_IMAGE_RESOURCE));
+    }
 
-        // Etiqueta Muestra
-        lblSample = new JLabel("Connect the dots!!!");
-        lblSample.setFont(fntSample.deriveFont(Font.BOLD, 60));
-        lblSample.setHorizontalAlignment(JLabel.RIGHT);
+    // Inicialización Posterior
+    private void initAfter() {
+        // Establecer Favicon
+        UtilesSwing.establecerFavicon(this, prp.getProperty(
+                PRP_FAVICON_RESOURCE, DEF_FAVICON_RESOURCE));
 
         // Panel Principal
         pnlPpal = new BackgroundPanel(imgSample);
@@ -109,22 +128,5 @@ public final class GUI extends JFrame {
         } catch (NumberFormatException e) {
             setSize(DEF_FORM_WIDTH, DEF_FORM_HEIGHT);
         }
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
-
-    // Inicialización Anterior    
-    private void initBefore() {
-        // Establecer LnF
-        UtilesSwing.establecerLnFProfile(prp.getProperty(
-                PRP_LOOK_AND_FEEL_PROFILE, DEF_LOOK_AND_FEEL_PROFILE));
-    }
-
-    // Inicialización Posterior
-    private void initAfter() {
-        // Establecer Favicon
-        UtilesSwing.establecerFavicon(this, prp.getProperty(
-                PRP_FAVICON_RESOURCE, DEF_FAVICON_RESOURCE));
     }
 }

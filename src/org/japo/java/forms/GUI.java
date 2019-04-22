@@ -61,10 +61,13 @@ public final class GUI extends JFrame {
 
     // Construcción - GUI
     private void initComponents() {
-        // Etiqueta Muestra
+        // Etiqueta Rótulo
         lblRotulo = new JLabel("Connect the dots!!!");
-        lblRotulo.setFont(fntRotulo.deriveFont(Font.BOLD, 60));
         lblRotulo.setHorizontalAlignment(JLabel.RIGHT);
+
+        // Panel Principal
+        pnlPpal.setLayout(new GridBagLayout());
+        pnlPpal.add(lblRotulo);
 
         // Ventana Principal
         setResizable(false);
@@ -84,7 +87,7 @@ public final class GUI extends JFrame {
 
         // Panel Principal
         pnlPpal = new BackgroundPanel(imgBack);
-        
+
         // Ventana Principal
         setContentPane(pnlPpal);
     }
@@ -94,9 +97,8 @@ public final class GUI extends JFrame {
         // Establecer Favicon
         UtilesSwing.establecerFavicon(this, prp.getProperty("img_favicon_resource"));
 
-        // Panel Principal
-        pnlPpal.setLayout(new GridBagLayout());
-        pnlPpal.add(lblRotulo);
+        // Etiqueta Rótulo
+        lblRotulo.setFont(fntRotulo.deriveFont(Font.BOLD, 60));
 
         // Ventana Principal - Propiedades
         setTitle(prp.getProperty("form_title"));

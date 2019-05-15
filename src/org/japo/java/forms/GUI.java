@@ -80,7 +80,10 @@ public final class GUI extends JFrame {
         UtilesSwing.establecerLnFProfile(prp.getProperty("look_and_feel_profile"));
 
         // Fuentes
-        fntRotulo = UtilesSwing.generarFuenteRecurso(prp.getProperty("font_resource"));
+        fntRotulo = UtilesSwing.generarFuenteRecurso(
+                prp.getProperty("font_resource"), 
+                UtilesSwing.FONT_LUCIDA_SANS_NAME, 
+                Font.DIALOG);
 
         // Imágenes
         imgBack = UtilesSwing.importarImagenRecurso(prp.getProperty("img_back_resource"));

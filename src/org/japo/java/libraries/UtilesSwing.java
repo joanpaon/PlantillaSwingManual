@@ -208,7 +208,21 @@ public final class UtilesSwing {
             System.out.println("ERROR: Reescalar/Asignar imagen a etiqueta");
         }
     }
+    
+    // Image ( Tamaño INI ) > Image ( Tamaño FIN )
+    public static Image escalarImagen(Image imgIni, int ancAct, int altAct) {
+        // Referencia Imagen
+        Image imgFin;
 
+        try {
+            imgFin = imgIni.getScaledInstance(ancAct, altAct, Image.SCALE_FAST);
+        } catch (Exception e) {
+            imgFin = imgIni;
+        }
+
+        return imgFin;
+    }
+    
     // Escalar Image > Etiqueta
     public static void escalarImagenEtiqueta(JLabel lblAct, Image imgIni, int ancAct, int altAct) {
         try {
@@ -447,6 +461,12 @@ public final class UtilesSwing {
             String fuenteSistema, String fuenteLogica) {
         return generarFuenteRecurso(recurso, DEF_FONT_STYLE, DEF_FONT_STYLE,
                 fuenteSistema, fuenteLogica);
+    }
+
+    // Fuente ( Recurso ) > Fuente
+    public static final Font generarFuenteRecurso(String recurso) {
+        return generarFuenteRecurso(recurso, DEF_FONT_STYLE, DEF_FONT_STYLE,
+                DEF_FONT_FAMILY, FONT_LOGICAL_SERIF_NAME);
     }
 
     // Campo de texto con DATO + ExpReg + Texto campo vacío

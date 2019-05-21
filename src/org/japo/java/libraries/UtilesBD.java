@@ -150,23 +150,27 @@ public final class UtilesBD {
         int numFilas;
 
         try {
-            // Número de la fila a la que apunta el cursor
-            int filaAct = rs.getRow();
+            if (rs != null && !rs.isClosed()) {
+                // Número de la fila a la que apunta el cursor
+                int filaAct = rs.getRow();
 
-            // Va al final del ResultSet
-            rs.last();
+                // Va al final del ResultSet
+                rs.last();
 
-            // Obtiene el número de filas
-            numFilas = rs.getRow();
+                // Obtiene el número de filas
+                numFilas = rs.getRow();
 
-            if (filaAct != 0) {
-                // Coloca el cursor en la posición previa
-                rs.absolute(filaAct);
+                if (filaAct != 0) {
+                    // Coloca el cursor en la posición previa
+                    rs.absolute(filaAct);
+                } else {
+                    // Coloca el cursor al principio del ResultSet
+                    rs.first();
+                }
             } else {
-                // Coloca el cursor al principio del ResultSet
-                rs.first();
+                numFilas = 0;
             }
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
             numFilas = 0;
         }
 
@@ -179,8 +183,12 @@ public final class UtilesBD {
         int filaActual;
 
         try {
-            filaActual = rs.getRow();
-        } catch (SQLException | NullPointerException e) {
+            if (rs != null && !rs.isClosed()) {
+                filaActual = rs.getRow();
+            } else {
+                filaActual = 0;
+            }
+        } catch (SQLException ex) {
             filaActual = 0;
         }
 

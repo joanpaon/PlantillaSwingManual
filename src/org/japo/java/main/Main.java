@@ -29,6 +29,9 @@ import org.japo.java.libraries.UtilesApp;
  */
 public final class Main {
 
+    // Clave de Acceso
+    private static final String ACCESS_UID = "JAPO-Omicron-0";
+
     // Colección de Ventanas
     public static final List<JFrame> VIEW_LIST = new ArrayList<>();
 
@@ -42,19 +45,25 @@ public final class Main {
 
     // Entrada a la aplicación
     public static void main(String[] args) {
-        // Lanzar GUI
-        SwingUtilities.invokeLater(() -> {
-            // Propiedades App
-            Properties prp = UtilesApp.importarPropiedadesRecurso();
+        if (args.length == 1 && args[0].equals(ACCESS_UID)) {
+            // Lanzar GUI
+            SwingUtilities.invokeLater(() -> {
+                // Propiedades App
+                Properties prp = UtilesApp.importarPropiedadesRecurso();
 
-            // Instanciar Vistas
-            GUI gui = new GUI(prp);
+                // Instanciar Vistas
+                GUI gui = new GUI(prp);
 
-            // Incorporar Vistas
-            VIEW_LIST.add(gui);
+                // Incorporar Vistas
+                VIEW_LIST.add(gui);
 
-            // Mostrar Vista
-            gui.setVisible(true);
-        });
+                // Mostrar Vista
+                gui.setVisible(true);
+            });
+        } else {
+            System.out.println("Acceso Denegado");
+            System.out.println("---");
+            System.out.println("Contacte con el servicio Técnico");
+        }
     }
 }

@@ -32,6 +32,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -208,21 +210,23 @@ public final class UtilesSwing {
             System.out.println("ERROR: Reescalar/Asignar imagen a etiqueta");
         }
     }
-    
+
     // Image ( Tamaño INI ) > Image ( Tamaño FIN )
     public static Image escalarImagen(Image imgIni, int ancAct, int altAct) {
-        // Referencia Imagen
+        // Imagen Original
         Image imgFin;
 
+        // Reescalado
         try {
             imgFin = imgIni.getScaledInstance(ancAct, altAct, Image.SCALE_FAST);
         } catch (Exception e) {
             imgFin = imgIni;
         }
 
+        // Imagen Reescalada
         return imgFin;
     }
-    
+
     // Escalar Image > Etiqueta
     public static void escalarImagenEtiqueta(JLabel lblAct, Image imgIni, int ancAct, int altAct) {
         try {
@@ -239,7 +243,7 @@ public final class UtilesSwing {
     // Portapapeles >> Texto
     public static final String importarTextoPortapapeles() {
         // Referencia al texto del portapapeles
-        String result = "";
+        String texto = "";
 
         try {
             // Acceso al portapapeles
@@ -250,13 +254,13 @@ public final class UtilesSwing {
             Transferable contents = clipboard.getContents(null);
 
             // Extrae texto del portapapeles
-            result = (String) contents.getTransferData(DataFlavor.stringFlavor);
+            texto = (String) contents.getTransferData(DataFlavor.stringFlavor);
         } catch (HeadlessException | UnsupportedFlavorException | IOException e) {
             System.out.println("ERROR: Lectura del portapapeles");
         }
 
         // Texto extraido
-        return result;
+        return texto;
     }
 
     // Texto >> Portapapeles
@@ -456,7 +460,7 @@ public final class UtilesSwing {
         return fuente;
     }
 
-    // Fuente ( Recurso | Sistema | Lógica ) + Estilo + Talla > Fuente
+    // Fuente ( Recurso | Sistema | Lógica ) > Fuente
     public static final Font generarFuenteRecurso(String recurso,
             String fuenteSistema, String fuenteLogica) {
         return generarFuenteRecurso(recurso, DEF_FONT_STYLE, DEF_FONT_STYLE,
@@ -537,26 +541,103 @@ public final class UtilesSwing {
         return validarCampo(txfActual, UtilesFecha.ER_FECHA, textoCampoVacio);
     }
 
+    // Fuente ?: Lista Fuentes Instaladas
     public static final boolean validarFuenteSistema(String fuente) {
         return UtilesArrays.buscar(obtenerTipografiasSistema(), fuente) != -1;
     }
-    
+
+    // Nombre Recurso > Image
     public static final Image importarImagenRecurso(String recurso) {
         // Referencia Imagen
         Image img;
-        
+
         try {
             // URL del Recurso
             URL urlPpal = ClassLoader.getSystemResource(recurso);
-            
+
             // Imagen de la URL
             img = new ImageIcon(urlPpal).getImage();
-            
+
         } catch (Exception e) {
             img = new ImageIcon().getImage();
         }
-        
+
         // Devuelve la imagen
         return img;
+    }
+
+    // Nombre Recurso + Ancho + Alto +  > Image ( Reescalada )
+    public static final Image importarImagenRecurso(String recurso, int ancho, int alto) {
+        // Referencia Imagen
+        Image img;
+
+        try {
+            // URL del Recurso
+            URL urlPpal = ClassLoader.getSystemResource(recurso);
+
+            // Imagen de la URL
+            img = new ImageIcon(urlPpal).getImage();
+        } catch (Exception e) {
+            img = new ImageIcon().getImage();
+        }
+
+        // Reescalado de la Imagen
+        img = escalarImagen(img, ancho, alto);
+
+        // Devuelve la imagen
+        return img;
+    }
+
+    // ResultSet > Deslizador Navegación
+    public static final void actualizarDeslizadorNavegacion(JSlider sldActual,
+            JLabel lblActual, ResultSet rs) throws SQLException {
+        // Número Registros
+        int numeroTotalRegistros = UtilesBD.obtenerNumeroRegistros(rs);
+
+        // Numero Registro Actual
+        int numeroRegistroActual = UtilesBD.obtenerPosicionActual(rs);
+
+        // Guarda los gestores de eventos
+        ChangeListener[] lista = sldActual.getChangeListeners();
+
+        // Desconecta los ChangeListener definidos en tiempo de diseño
+        // Pero no los BeanBinding - Si se desconectan todos en enlazado
+        // NO FUNCIONA
+        for (ChangeListener cl : lista) {
+            // Obtiene la representación de texto del Listener
+            String texto = cl.toString();
+
+            // Ignora el listener si es BeanBinding
+            if (!texto.contains("org.jdesktop")) {
+                sldActual.removeChangeListener(cl);
+            }
+        }
+
+        // Actualiza Parámetros Deslizador
+        if (numeroTotalRegistros > 0) {
+            sldActual.setEnabled(true);
+            sldActual.setMinimum(1);                        // Change Listeners notificados
+            sldActual.setMaximum(numeroTotalRegistros);     // Change Listeners notificados
+            sldActual.setValue(numeroRegistroActual);       // Change Listeners notificados
+        } else {
+            sldActual.setEnabled(false);
+            sldActual.setMinimum(0);          // Change Listeners notificados
+            sldActual.setMaximum(0);          // Change Listeners notificados
+            sldActual.setValue(0);            // Change Listeners notificados
+        }
+
+        // Total de registros
+        lblActual.setText(numeroTotalRegistros + "");
+
+        // Conecta los ChangeListener desconectados
+        for (ChangeListener cl : lista) {
+            // Obtiene la representación de texto del Listener
+            String texto = cl.toString();
+
+            // Ignora el listener si es BeanBinding
+            if (!texto.contains("org.jdesktop")) {
+                sldActual.addChangeListener(cl);
+            }
+        }
     }
 }

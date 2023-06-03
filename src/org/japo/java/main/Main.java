@@ -15,10 +15,7 @@
  */
 package org.japo.java.main;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.japo.java.forms.GUI;
 import org.japo.java.libraries.UtilesApp;
@@ -32,30 +29,20 @@ public final class Main {
     // Clave de Acceso
     private static final String ACCESS_UID = "JAPO-Omicron-0";
 
-    // Colección de Ventanas
-    public static final List<JFrame> VIEW_LIST = new ArrayList<>();
-
-    // Entidades Intercambio Datos
-    public static final List<Object> DATA_LIST = new ArrayList<>();
-
     // Constructor Oculto
     private Main() {
-
     }
 
     // Entrada a la aplicación
     public static void main(String[] args) {
-        if (args.length == 1 && args[0].equals(ACCESS_UID)) {
+        if (validarAcceso(args)) {
             // Lanzar GUI
             SwingUtilities.invokeLater(() -> {
-                // Propiedades App
-                Properties prp = UtilesApp.importarPropiedadesRecurso();
+                // Obtener Propiedades
+                Properties prp = obtenerPropiedades();
 
                 // Instanciar Vistas
                 GUI gui = new GUI(prp);
-
-                // Incorporar Vistas
-                VIEW_LIST.add(gui);
 
                 // Mostrar Vista
                 gui.setVisible(true);
@@ -65,5 +52,28 @@ public final class Main {
             System.out.println("---");
             System.out.println("Contacte con el servicio Técnico");
         }
+    }
+
+    // Validar Acceso
+    private static boolean validarAcceso(String[] args) {
+        return true
+                && args != null
+                && args.length == 1
+                && args[0].equals(ACCESS_UID);
+    }
+
+    // Cargar Propiedades
+    private static Properties obtenerPropiedades() {
+        // Contenedor de propiedades
+        Properties prp = new Properties();
+
+        // Obtener Propiedades Externas
+        prp.putAll(UtilesApp.importarPropiedades());
+
+        // Obtener Propiedades Internas
+        prp.putAll(UtilesApp.importarPropiedadesRecurso());
+
+        // Retorno
+        return prp;
     }
 }

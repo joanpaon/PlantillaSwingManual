@@ -1,5 +1,5 @@
-/* 
- * Copyright 2019 José A. Pacheco Ondoño - joanpaon@gmail.com.
+/*
+ * Copyright 2023 JAPO Labs - japolabs@gmail.com.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,22 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.japo.java.events;
-
-import java.awt.event.WindowAdapter;
-import org.japo.java.forms.GUI;
+package org.japo.java.libraries;
 
 /**
  *
- * @author José A. Pacheco Ondoño - joanpaon@gmail.com
+ * @author JAPO Labs - japolabs@gmail.com
  */
-public final class WEM extends WindowAdapter {
+public final class UtilesDAM {
+    // Sentencias SQL
+    //
 
-    // Referencia al GUI
-    private final GUI gui;
-
-    // Constructor
-    public WEM(GUI gui) {
-        this.gui = gui;
+    // Constructor Privado
+    private UtilesDAM() {
     }
+
+    // Métodos Acceso a Datos
+    //
 }
